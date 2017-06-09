@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        			    http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+
+
+        			    http://www.springframework.org/schema/tx
+        			    http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+        			    http://www.springframework.org/schema/context
+        			    http://www.springframework.org/schema/context/spring-context-4.2.xsd
+
+
+        			    http://www.springframework.org/schema/aop
+        				http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+
+                        http://www.springframework.org/schema/task
+        			    http://www.springframework.org/schema/task/spring-task-4.2.xsd">
+
+    <!-- 组件扫描 -->
+    <context:component-scan base-package="com.xhsmart.ssmcxf"
+                            use-default-filters="true">
+        <!-- 排除指定注解注@Controller -->
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!-- 配置DataSource -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"/>
+
+    <!-- 配置sqlSessionFactory (指定类型别名),默认类型别名就是类名 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
+          p:dataSource-ref="dataSource" p:typeAliasesPackage="com.xhsmart.ssmcxf.entity"
+          p:configLocation="classpath:mybatis-config.xml"/>
+    <!-- 指定mybatis全局配置文件 property name="configLocation" value="classpath:mybatis-config.xml"
+        扫描mappers目录以及子目录下的所有xml文件 property name="mapperLocations" value="classpath:com/xhsmart/ssmcxf/mapper/*.xml" -->
+
+
+    <!-- 配置MapperScannerConfigurer (扫描mapper数据访问接口，创建代理对象，交由Spring容器管理, bean的id默认为mapper接口类名首字母小写). -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"
+          p:sqlSessionFactoryBeanName="sqlSessionFactory" p:basePackage="com.xhsmart.ssmcxf.mapper"/>
+
+    <!-- 配置DataSourceTransactionManager -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+          p:dataSource-ref="dataSource"/>
+
+    <!-- 开启annotation注解事务驱动. -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!-- 开启annotation注解任务 -->
+    <task:annotation-driven/>
+
+    <!-- 配置普通切面bean -->
+    <bean id="logAdvice" class="com.xhsmart.ssmcxf.aop.LogAdvice"/>
+
+    <!-- 事务切面(运用到哪些切入点) -->
+    <aop:config>
+        <!-- 定义切入点 -->
+        <aop:pointcut expression="execution(* com.xhsmart.ssmcxf.service.*.*.*(..))"
+                      id="pointcut"/>
+        <!-- 把普通bean转化成切面bean -->
+        <aop:aspect ref="logAdvice">
+            <!-- 记录业务层方法执行的毫秒数 -->
+            <aop:around method="around" pointcut-ref="pointcut"/>
+            <!-- 记录业务层方法异常信息 -->
+            <aop:after-throwing method="error" pointcut-ref="pointcut"
+                                throwing="ex"/>
+        </aop:aspect>
+    </aop:config>
+
+</beans>
