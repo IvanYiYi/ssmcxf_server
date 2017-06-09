@@ -1,7 +1,6 @@
 package com.xhsmart.ssmcxf.service;
 
 import com.xhsmart.ssmcxf.common.PageModel;
-import com.xhsmart.ssmcxf.entity.Ik;
 
 import java.util.List;
 
@@ -15,17 +14,17 @@ import java.util.List;
  */
 public interface IkService {
     /**
-     * 添加部门
+     * add ik
      *
      * @param ik
      */
-    void saveDept(Ik ik);
+    <T>void saveIk(T ik);
 
     /**
      * get data
-     * @return Ik
+     * @return Ik_16
      */
-    List<Ik> get();
+    List<?> get();
 
     /**
      * save ik
@@ -35,9 +34,9 @@ public interface IkService {
     /**
      *
      * @param  model pageModel instance
-     * @return Ik collection
+     * @return Ik_16 collection
      */
-    List<Ik> getByPage(PageModel model);
+    List<?> getByPage(PageModel model);
 
     /**
      * get model
@@ -49,4 +48,9 @@ public interface IkService {
      * delete data
      */
     void delete(PageModel model);
+
+    /**
+     * @return ik count
+     */
+    int count();
 }

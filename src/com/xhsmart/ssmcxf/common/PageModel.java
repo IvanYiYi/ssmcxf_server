@@ -12,7 +12,7 @@ public class PageModel {
     /**
      * 定义默认一页显示的记录条数
      */
-    private final static int PAGE_SIZE = 50000;
+    private final static int PAGE_SIZE = 50;
     /**
      * 当前页码
      */

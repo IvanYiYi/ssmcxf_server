@@ -5,7 +5,7 @@ import org.apache.ibatis.type.Alias;
 import java.io.Serializable;
 
 /**
- * Ik
+ * Ik_16
  *
  * @author YiPeng
  * @version 1.0
@@ -13,8 +13,8 @@ import java.io.Serializable;
  * @date 2016-3-4 下午2:52:30
  */
 @SuppressWarnings("serial")
-@Alias("Ik")
-public class Ik implements Serializable {
+@Alias("Ik_32")
+public class Ik_32 implements Serializable {
 
     private int id;
     private String key;

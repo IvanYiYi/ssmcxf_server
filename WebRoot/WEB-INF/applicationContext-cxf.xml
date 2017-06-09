@@ -19,12 +19,45 @@
     </http-conf:conduit>
 
     <!-- 配置Bean -->
-    <bean id="cxfService" class="com.xhsmart.ssmcxf.ws.impl.CXFServiceImpl"
-          p:ikService-ref="ikService"/>
+    <bean id="cxfService_8" class="com.xhsmart.ssmcxf.ws.impl.CXFServiceImpl_8"
+          p:ikService-ref="ikService_8"/>
 
-    <!-- 暴露WebService服务组件 http://localhost:8080/ssmcxf_server/services/xhsmart?wsdl
-        http://localhost:8080/ssmcxf_server/services/xhsmart?wsdl -->
-    <jaxws:endpoint implementor="#cxfService" address="/xhsmart">
+    <!-- 暴露WebService服务组件 http://localhost:8080/ssmcxf_server/services/xhsmart_8?wsdl -->
+    <jaxws:endpoint implementor="#cxfService_8" address="/xhsmart_8">
+        <!-- 配置In拦截器 -->
+        <jaxws:inInterceptors>
+            <bean class="org.apache.cxf.interceptor.LoggingInInterceptor"/>
+            <bean class="com.xhsmart.ssmcxf.ws.interceptor.AuthInterceptor"/>
+        </jaxws:inInterceptors>
+        <!-- 配置Out拦截器 -->
+        <jaxws:outInterceptors>
+            <bean class="org.apache.cxf.interceptor.LoggingOutInterceptor"/>
+        </jaxws:outInterceptors>
+    </jaxws:endpoint>
+
+    <!-- 配置Bean -->
+    <bean id="cxfService_16" class="com.xhsmart.ssmcxf.ws.impl.CXFServiceImpl_16"
+          p:ikService-ref="ikService_16"/>
+
+    <!-- 暴露WebService服务组件 http://localhost:8080/ssmcxf_server/services/xhsmart_16?wsdl -->
+    <jaxws:endpoint implementor="#cxfService_16" address="/xhsmart_16">
+        <!-- 配置In拦截器 -->
+        <jaxws:inInterceptors>
+            <bean class="org.apache.cxf.interceptor.LoggingInInterceptor"/>
+            <bean class="com.xhsmart.ssmcxf.ws.interceptor.AuthInterceptor"/>
+        </jaxws:inInterceptors>
+        <!-- 配置Out拦截器 -->
+        <jaxws:outInterceptors>
+            <bean class="org.apache.cxf.interceptor.LoggingOutInterceptor"/>
+        </jaxws:outInterceptors>
+    </jaxws:endpoint>
+
+    <!-- 配置Bean -->
+    <bean id="cxfService_32" class="com.xhsmart.ssmcxf.ws.impl.CXFServiceImpl_32"
+          p:ikService-ref="ikService_32"/>
+
+    <!-- 暴露WebService服务组件 http://localhost:8080/ssmcxf_server/services/xhsmart_32?wsdl -->
+    <jaxws:endpoint implementor="#cxfService_32" address="/xhsmart_32">
         <!-- 配置In拦截器 -->
         <jaxws:inInterceptors>
             <bean class="org.apache.cxf.interceptor.LoggingInInterceptor"/>

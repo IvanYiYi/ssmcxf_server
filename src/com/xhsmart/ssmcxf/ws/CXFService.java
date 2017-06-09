@@ -1,7 +1,6 @@
 package com.xhsmart.ssmcxf.ws;
 
 import com.xhsmart.ssmcxf.common.PageModel;
-import com.xhsmart.ssmcxf.entity.Ik;
 
 import javax.jws.WebService;
 import java.util.List;
@@ -17,19 +16,19 @@ import java.util.List;
 @WebService
 public interface CXFService {
     /**
-     * 保存方法
+     * save
      *
      * @param ik
      * @return
      */
-    public String saveIk(Ik ik);
+    public <T>String saveIk(T ik);
 
     /**
      * get all
      *
      * @return list collection
      */
-    public List<Ik> get();
+    public List<?> get();
 
     /**
      * save dept
@@ -42,7 +41,7 @@ public interface CXFService {
      * @param model
      * @return
      */
-    public List<Ik> getByPage(PageModel model);
+    public List<?> getByPage(PageModel model);
 
     /**
      * split entity
@@ -55,5 +54,10 @@ public interface CXFService {
      * delete date
      */
     public void delete(PageModel model);
+
+    /**
+     * get count
+     */
+    public int count();
 
 }
